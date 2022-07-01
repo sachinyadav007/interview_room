@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+    </script>
+
+    <script
+      defer
+      src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"
+    ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="/socket.io/socket.io.js" defer></script>
+
+    
+    <script src="../static/js/lib/ace.js" defer></script>
+    <script src="../static/js/lib/theme-monokai.js" defer></script>
+    <script src="../static/js/script.js" defer></script>
+     <script src="../static/js/canvas.js" defer></script>
+    <script src="../static/js/ide.js" defer></script>
+
+    <style>
+     
+     body {
+        margin: 0px;
+      }
+
+
+      .parent {
+  /* border: 1px solid; */
+  height: 2rem;
+  width: 15rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-sizing: border-box;
+  /* background-color: ghostwhite; */
+}
+.color {
+  height: 70%;
+  width: 10%;
+  background: red;
+}
+.black {
+  background-color: white;
+  border: solid black 1px;
+}
+.red {
+  background-color:"ligth"+"red";
+}
+.blue {
+  background-color: blue;
+}
+.green {
+  background-color: green;
+}
+.yellow {
+  background-color: yellow;
+}
+.editor-container {
+  height: 600px;
+  width: 1025;
+ 
+}
+.eraser {
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon {
+  size: 7rem;
+}
+.newpage {
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+      .header {
+        width: 100%;
+        height: 3rem;
+        background-color: #1ebea5;
+      }
+      .features-option{
+        display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: sticky;
+      }
+
+      .left {
+        width: 75%;
+        height: 100%;
+        /* display: flex; */
+        background-color: yellow;
+      }
+      .right {
+        width: 25%;
+        height: 100%;
+        background-color: green;
+      }
+
+
+      #user-chat-box {
+    position: fixed;
+    bottom: 2px;
+    right: 10px;
+    height: 260px;
+    width: 310px;
+    border: 1px solid black;
+    border-bottom: 0px;
+    
+  }
+ .chatting-section{
+   height: 85%;
+   width: 100%;
+   background-color: chartreuse;
+   overflow-y: auto;
+ }
+ #video-grid {
+
+position: fixed;
+right:1rem;
+top:3rem;
+
+
+display: grid;
+grid-template-columns: repeat(auto-fill, 305px);
+grid-auto-rows: 150px;
+}
+
+video {
+width: 100%;
+height: 100%;
+object-fit: cover;
+margin: 10px solid black;
+/* border-radius: 20%; */
+
+}
+
+.leftside {
+  margin-top: 10px;
+  background-color: rgb(51, 51, 51);
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
+  float: left;
+}
+.rightside {
+  background-color: rgb(33, 29, 70);
+  padding: 10px;
+  color: white;
+  border-radius: 15px;
+  float: right;
+}
+.chats {
+  min-height: 15px;
+  margin-top: 10px;
+  width: 70%;
+  clear: both;
+  word-break: break-all;
+}
+
+ .chat-botton{
+   display: flex;
+   height: 15%;
+   width: 100%;
+ }
+ .ChatIput{
+   height: 100%;
+   width: 78%;
+   margin-top: -2px;
+
+ }
+ .Chatsubmit{
+  height: 100%;
+   width: 20%;
+ }
+    </style>
+  </head>
+  <body>
+    <div class="header"></div>
+    <div
+      class="main"
+      style="
+        width: 100%;
+        height: 577px;
+        display: flex;
+        background-color: hotpink;
+      "
+    >
+      <div class="left" style="position: fixed;">
+        <!--  code ediotor and opeboard    -->
+
+    
+
+
+       
+       <div class="features-option" 
+       style="background-color: indigo;height:
+        4rem;width: 100%;  ">
+        
+    
+        <div class="parent">
+            <div class="color black" ></div>
+            <div class="color red" ></div>
+            <div class="color green" > </div>
+            <div class="color blue"></div>
+            <div class="color yellow"></div>
+          </div>
+          <div class="parent">
+
+            <i class="fas fa-pencil-alt pencilsize" value="2"></i>
+           
+            <i class="fas fa-pencil-alt  pencilsize fa-2x icon" value="5"></i>
+            <i class="fas fa-pencil-alt pencilsize fa-3x icon" value="10"></i>
+
+          </div>
+          <div class="eraser">
+            <i class="fas fa-eraser fa-2x icon"></i>
+          </div>
+      
+          <div class="newpage download">
+            <i class="fas fa-file-download fa-2x icon"></i>
+           
+            <!-- <i class="fas fa-plus-square fa-2x icon"></i> -->
+            <!-- <i class="fab fa-telegram-plane icon"></i>  -->
+        </div>
+    
+    
+    
+   
+          
+   
+   
+   
+   
+        </div>
+        <div class="features-option" 
+        style="background-color: indigo;height: 4rem;
+       width: 100%;  display: none;" >
+
+
+
+<label>   Select language</label>
+<select id="languae" class="language select"  style="-webkit-appearance:none;height:60% ;width: 13rem;">
+    <option value="cpp">C</option>
+    <option value="python">python</option>
+    <option value="java">Java</option>
+    <option value="cpp">C++</option>
+    <option value="javascript">JavaScript</option>
+  </select>
+       
+    
+
+
+  <label> THEME</label>
+  <select id="theme"    style="-webkit-appearance: none; text-align: center;border-radius: 2rem;height: 60%;width: 13rem;"  >
+    <option  style="text-align: center;" value="twilight">Bluish</option>
+    <option value="monokai">Black</option>
+    <option value="tomorrow">white</option>
+    
+  </select>
+
+
+  <label>Font size</label>
+  <select id="fontsize"    style="-webkit-appearance: none; text-align: center;border-radius: 2rem;height: 60%;width: 13rem;"  >
+    <option  style="text-align: center;" value="twilight">6</option>
+    <option value="monokai">2</option>
+    <option value="tomorrow">4</option>
+    
+  </select>
+
+
+
+
+
+
+
+    
+    </div>
+
+    <div class="editor editor-container"
+     id="editor" contenteditable="true"  ></div> 
+       <!-- <canvas class="board editor-container"></canvas> -->
+       
+
+
+
+
+
+      </div>
+
+         <div class="right">
+        <!--  chaating and zoom session -->
+
+video
+
+        <div id="video-grid"></div>
+
+
+        <div id="user-chat-box">
+ 
+ 
+          <div class="chatting-section"></div>
+ 
+  
+ 
+  
+          <div class="chat-botton">
+ 
+           <input type="text" class="ChatIput">
+           <!-- <button type="submit" class="Chatsubmit">  -->
+
+
+     <i class="fab fa-telegram-plane icon fa-3x Chatsubmit" aria-hidden="true"></i>
+           <!-- </button> -->
+           <!-- <i class="fab fa-telegram-plane icon"></i>  -->
+ 
+          </div>
+            
+                      
+          
+        
+       </div>
+ 
+ 
+   </div>
+
+
+
+
+        
+         </div>
+    </div>
+  </body>
+  
+</html>

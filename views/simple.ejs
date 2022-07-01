@@ -1,0 +1,60 @@
+<link href="../static/css/index.css" rel="stylesheet" type="text/css" />
+
+<style>
+  body {
+    margin-top: -2px;
+    padding-top: 0px;
+  }
+  .header-code {
+    height: 2rem;
+    width: 100%;
+    background-color: aqua;
+  }
+  .control-pannel {
+    height: 2rem;
+    width: 100%;
+    background-color: bisque;
+  }
+  .editor {
+    height: 430px;
+    /* background-color: blue; */
+    width: 70%;
+    border: 10px solid green;
+  }
+  .btn {
+    height: 4rem;
+    width: 4rem;
+    /* left: 0px;
+     */
+    right: 0px;
+    background-color: brown;
+  }
+
+  .ace_editor {
+    font: 20px;
+  }
+</style>
+<body>
+  <div class="header">Codeboard online IDe</div>
+
+  <div class="control-pannel">
+    Select language &nbsp; &nbsp;
+
+    <select id="languae" class="language">
+      <option value="cpp">C</option>
+      <option value="python">python</option>
+      <option value="java">Java</option>
+      <option value="cpp">C++</option>
+      <option value="javascript">JavaScript</option>
+    </select>
+  </div>
+
+  <div class="editor" id="editor" contenteditable="true"></div>
+  <div class="button-container">
+    <button class="btn">Run</button>
+  </div>
+
+  <script src="../static/js/lib/ace.js"></script>
+  <script src="../static/js/lib/theme-monokai.js"></script>
+  <script src="../static/js/ide.js"></script>
+</body>

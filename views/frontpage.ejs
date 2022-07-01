@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      integrity="undefined"
+      crossorigin="anonymous"
+    />
+    <style>
+      .header {
+        height: 4rem;
+        width: 100%;
+        background-color: #1ebea5;
+      }
+      body {
+        margin: 0px;
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5rem;
+        /* flex-direction: column; */
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header"></header>
+    <div class="container">
+      <img src="../static//images/hero.png" />
+    </div>
+    <div class="container">
+        <div class="form-group " style="margin-top: 3rem;">
+      <form  action="/home" method="POST"  > 
+      
+          <label for="exampleInputEmail1"  style="width: 50rem ;margin-left:18rem" >Email address</label>
+          <input
+            type="email"
+            class="form-control col-12 col-md-8"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter email"
+            col="6"
+            style="width: 50rem ;margin-left:18rem" 
+          />
+          <a href="/home">
+          <input
+            type="button"
+            class="btn btn-primary align-self-start"
+            style="width: 10rem;margin-left:58rem; text-align: center"
+            value="Submit"
+           
+          >
+        </a>
+       
+        </input>
+       
+      </form>
+    </div>
+    </div>
+  </body>
+</html>

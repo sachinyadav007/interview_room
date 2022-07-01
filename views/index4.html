@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .header {
+        width: 100%;
+        height: 2.5rem;
+        background-color: #1ebea5;
+      }
+      .editor {
+        height: 100%;
+        /* background-color: blue; */
+        min-width: 96%;
+        border: 10px solid green;
+        /* position: fixed; */
+      }
+      body {
+        margin: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header"></div>
+
+    <div class="colors" style="display: flex; height: 4rem">
+      <div class="color red">RED</div>
+      <div class="color green">GREEN</div>
+      <div class="color blue">BLUE</div>
+      <div class="download">Download</div>
+      <!-- <input type="file" class="file-selector" style="display: none;"> -->
+    </div>
+
+    <div class="colors" style="display: none; height: 4rem">
+      <div class="color red">RED</div>
+      <div class="color green">GREEN</div>
+      <div class="color blue">BLUE</div>
+      <div class="download">Download</div>
+      <!-- <input type="file" class="file-selector" style="display: none;"> -->
+    </div>
+    <div style="height: 95%; width: 92%; display: flex">
+      <div
+        style="
+          /* height: 100%; */
+          background-color: yellow;
+          min-width: 10%;
+          display: flex;
+          flex-direction: column;
+
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <img
+          src="/static/images/openBoard.png"
+          class="openBoard"
+          style="width: 6rem; height: 5rem; margin-top: -5rem"
+        />
+        <img
+          src="/static/images/code2.jpg"
+          class="Codeditor"
+          style="width: 6rem; height: 5rem; margin-top: 5rem"
+        />
+      </div>
+      <canvas class="board nodepad editor"></canvas>
+    </div>
+  </body>
+  <script>
+    let board = document.querySelector(".board");
+    // tool -> digitizer pen
+    let tool = board.getContext("2d");
+    board.height = window.innerHeight;
+    board.width = window.innerWidth;
+    let isDown = false;
+    tool.strokeStyle = "red";
+    tool.lineWidth = 2;
+    let colorArr = document.querySelectorAll(".color");
+    let colorContainer = document.querySelector(".colors");
+    let header = document.querySelector(".header");
+
+    board.addEventListener("mousedown", function (e) {
+      console.log(e);
+      tool.beginPath();
+      tool.moveTo(e.clientX, getY(e.clientY));
+      isDown = true;
+    });
+    board.addEventListener("mousemove", function (e) {
+      // console.log("Move to")
+      if (isDown == true) {
+        tool.lineTo(e.clientX, getY(e.clientY));
+        tool.stroke();
+      }
+    });
+    // event
+    board.addEventListener("mouseup", function (e) {
+      // tool.lineTo(e.clientX, e.clientY);
+      // tool.stroke();
+      isDown = false;
+    });
+    function get(orginalX) {
+      let obj = document.querySelector(".header");
+    }
+    function getY(originalY) {
+      let obj = colorContainer.getBoundingClientRect();
+      let obj2 = document.querySelector(".header");
+      let height = obj.height + obj2.height;
+      return originalY - obj.height;
+    }
+  </script>
+</html>

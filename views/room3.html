@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      const ROOM_ID = "<%= roomId %>";
+    </script>
+
+    <script
+      defer
+      src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"
+    ></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+
+    <!-- <script src="../static/js/lib/ace.js"></script> -->
+    <script src="../static/js/lib/ace.js" defer></script>
+    <script src="../static/js/lib/theme-monokai.js" defer></script>
+    <script src="../static/js/script.js" defer></script>
+    <!-- <script src="../static/js/ide.js" defer></script> -->
+
+    <style>
+     
+     body {
+        margin: 0px;
+      }
+      .header {
+        width: 100%;
+        height: 3rem;
+        background-color: #1ebea5;
+      }
+
+      .left {
+        width: 75%;
+        height: 100%;
+        /* display: flex; */
+        background-color: yellow;
+      }
+      .right {
+        width: 25%;
+        height: 100%;
+        background-color: green;
+      }
+
+
+      #user-chat-box {
+    position: fixed;
+    bottom: 2px;
+    right: 10px;
+    height: 260px;
+    width: 280px;
+    border: 2px solid black;
+    
+  }
+ .chatting-section{
+   height: 85%;
+   width: 100%;
+   background-color: chartreuse;
+   overflow-y: auto;
+ }
+ #video-grid {
+
+position: fixed;
+right:2rem;
+top:3rem;
+
+
+display: grid;
+grid-template-columns: repeat(auto-fill, 225px);
+grid-auto-rows: 150px;
+}
+
+video {
+width: 100%;
+height: 100%;
+object-fit: cover;
+margin: 10px solid black;
+/* border-radius: 20%; */
+
+}
+
+ .chat-botton{
+   display: flex;
+   height: 15%;
+   width: 100%;
+ }
+ .ChatIput{
+   height: 100%;
+   width: 70%;
+
+ }
+ .Chatsubmit{
+  height: 100%;
+   width: 30%;
+ }
+    </style>
+  </head>
+  <body>
+    <div class="header"></div>
+    <div
+      class="main"
+      style="
+        width: 100%;
+        height: 577px;
+        display: flex;
+        background-color: hotpink;
+      "
+    >
+      <div class="left" style="position: fixed;">
+        <!--  code ediotor and opeboard    -->
+
+       <div class="features-option" 
+       style="background-color: indigo;height: 4rem;width: 100%;"></div>
+
+
+       
+       <div class="features-option" 
+       style="background-color: indigo;height: 4rem;width: 100%; display:none;"></div>
+
+       <canvas class="board"></canvas>
+
+
+
+
+
+
+      </div>
+
+         <div class="right">
+        <!--  chaating and zoom session -->
+
+
+
+        <div id="video-grid"></div>
+
+
+        <div id="user-chat-box">
+ 
+ 
+          <div class="chatting-section"></div>
+ 
+  
+ 
+  
+          <div class="chat-botton">
+ 
+           <input type="text" class="ChatIput">
+           <button type="submit" class="Chatsubmit"> Send</button>
+ 
+ 
+          </div>
+            
+                      
+ 
+        
+       </div>
+ 
+ 
+   </div>
+
+
+
+
+        
+         </div>
+    </div>
+  </body>
+  <script>
+
+
+let board = document.querySelector(".board");
+      // tool -> digitizer pen
+      let tool = board.getContext("2d");
+      let left=document.querySelector(".left");
+      board.height = 600;
+      board.width =1025;
+      tool.strokeStyle = "yellow";
+      tool.fillRect(0, 0, 1025, 600)
+      
+      tool.stroke();
+   
+   
+   
+        tool.lineWidth = 10;
+
+        let headercontainer = document.querySelector(".header");
+       let featuredoption=document.querySelector(".features-option")
+       
+        let isDown = false;
+      tool.strokeStyle = "red";
+      tool.lineWidth = 2;
+      board.addEventListener("mousedown", function (e) {
+        console.log(e);
+        tool.beginPath();
+        tool.moveTo(e.clientX, getY(e.clientY));
+        isDown = true;
+      });
+      board.addEventListener("mousemove", function (e) {
+        // console.log("Move to")
+        if (isDown == true) {
+          tool.lineTo(e.clientX, getY(e.clientY));
+          tool.stroke();
+        }
+      });
+      // event
+      board.addEventListener("mouseup", function (e) {
+        // tool.lineTo(e.clientX, e.clientY);
+        // tool.stroke();
+        isDown = false;
+      });
+      function getY(originalY) {
+        let obj = headercontainer.getBoundingClientRect();
+        let obj2=featuredoption.getBoundingClientRect();
+        let height = obj.height+obj2.height;
+        return originalY - height;
+      }
+  </script>
+</html>
